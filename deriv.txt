@@ -1,0 +1,21 @@
+import MetaTrader5 as mt5
+import pandas as pd
+
+login = 24334468
+password = '@5EjRxWn'
+server = 'Deriv-Demo'
+
+if not mt5.initialize(login=login, password=password, server=server):
+    print("Initialize() failed, error code =", mt5.last_error())
+else:
+    print("Successfully connected to MT5")
+
+
+account_info = mt5.account_info()
+if account_info is None:
+    print("Failed to get account info, error code =", mt5.last_error())
+else:
+    df = pd.DataFrame(list(account_info._asdict().items()), columns=['Property', 'Value'])
+    print(df)
+
+mt5.shutdown()
